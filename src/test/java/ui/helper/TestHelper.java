@@ -1,22 +1,53 @@
 package ui.helper;
 
 import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.rules.ErrorCollector;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class TestHelper {
 
+    @Rule
+    ErrorCollector errorCollector = new ErrorCollector();
     public static WebDriver driver;
 
     @BeforeClass
     public static void setDriver() {
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver.exe");
-        driver = new ChromeDriver();
+        driver = CommonHelper.loadDriver("chrome");
+        driver.get("http://cognit.mynetgear.com:3000/");
+
     }
-//    @AfterClass
+
+    //  @AfterClass
 //    public static void teardowne() {
-//        driver.quit();
+//        CommonHelper.quitDriver();
 //    }
 
 
 }
+/*
+public void verifyEquals(String message,String expected,String actual){
+try{
+  assertEquals(message,expected,actual);
+}catch(AsserionEeeor e){
+    errorCollection.addError(e);
+}
+}
+
+
+public void varifyTrue(String message,boolean actualCondition){
+try{
+  assertTrue(message,actualCondition);
+}catch(AssertionError e){
+  errorClllection.addError(e);
+}
+}
+
+public void varifyFalse(String message,boolean actualCondition){
+try{
+  assertFalse(message,actualCondition);
+}catch(AssertionError e){
+  errorClllection.addError(e);
+}
+}
+ */

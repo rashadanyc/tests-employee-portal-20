@@ -1,44 +1,53 @@
 package ui.test;
 
-import org.junit.Assert;
-import org.junit.Before;
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
+import ui.helper.CommonHelper;
 import ui.helper.TestHelper;
 import ui.page.AddEmployeePage;
-
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 
 public class AddEmployeeTest extends TestHelper {
-    private String Email = "SharaBegum879@gmail.com";
-    private String email = "pinTreeBird@test.com";
-    private AddEmployeePage addEmployeePage = new AddEmployeePage(driver);
 
-    @Before
-    public void setupTest() {
-        //1. Navigate to 'Test Pages For Automating' home page.
-        driver.get("http://cognit.mynetgear.com:3000/");
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    }
+    private AddEmployeePage addEmployeePage = new AddEmployeePage(driver);
 
     @Test
     public void employeeAdd1() {
+        String firstName = "lll"; //RandomStringUtils.randomAlphabetic(10);
+        String lastName = "hhhh"; //RandomStringUtils.randomAlphabetic(10);
+        String email = firstName + lastName + RandomStringUtils.randomAlphabetic(10) + "@gmail.com";
         addEmployeePage.clickOnAddEmployeeTab();
-        addEmployeePage.setAddEmployeeFrom();
+        addEmployeePage.setAddEmployeeFrom(firstName,
+                lastName,
+                email,
+                "690658378283",
+                "10/09/2020",
+                "3000",
+                "0.6",
+                "AC_ACCOUNT",
+                "122",
+                "IT");
         addEmployeePage.clickOnSubmitButton();
-        //ToDo assert
-        Assert.assertEquals("", "", "");
+        //todo assert
+        String actualMessage = addEmployeePage.getFromSubmissionStatusMessage();
+        String empId = CommonHelper.getEmloyeeId(lastName);
+        String expectedSuccessMessage = "Following employee has been saved : Name: " + firstName + " " + lastName + " employee Id:" + empId;
+        assertTrue("Message did not match", actualMessage.contains(expectedSuccessMessage));
 
     }
 
-    @Test
-    public void addEmployee2() {
-        addEmployeePage.clickOnAddEmployeeTab();
-        addEmployeePage.setAddEmployeeFrom();
-        addEmployeePage.clickOnSubmitButton();
-        //ToDo assert
-        Assert.assertEquals("", "", "");
 
-   }
 }
+
+
+//    @Test
+//    public void addEmployee2() {
+//        addEmployeePage.clickOnAddEmployeeTab();
+//        addEmployeePage.setAddEmployeeFrom("","" ,"","","" ,"" ,"","");
+//        addEmployeePage.clickOnSubmitButton();
+//        //ToDo assert
+//        Assert.assertEquals("message does not match", "Failed to add employees. Add employee success message is found", "");
+
+// }
+//}
